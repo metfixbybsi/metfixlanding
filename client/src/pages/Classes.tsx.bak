@@ -1,0 +1,483 @@
+/*
+ * Classes.tsx - MetFix v3 "Earned Authority" Design System
+ * Colors: #0A0A0A bg, #C9A96E gold, #EFEFEF text
+ * Fonts: Playfair Display (display), DM Sans (body), DM Mono (labels)
+ */
+
+import { useEffect, useRef, useState } from "react";
+import { ArrowRight, Clock, BookOpen, Award, Star } from "lucide-react";
+import { Link } from "wouter";
+
+function Reveal({ children, delay = 0, direction = "up" }: {
+  children: React.ReactNode; delay?: number; direction?: "up" | "left" | "right";
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = ref.current; if (!el) return;
+    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) { el.classList.add("visible"); obs.disconnect(); } }, { threshold: 0.08 });
+    obs.observe(el); return () => obs.disconnect();
+  }, []);
+  const cls = direction === "left" ? "reveal-left" : direction === "right" ? "reveal-right" : "reveal";
+  return <div ref={ref} className={cls} style={{ transitionDelay: `${delay}ms` }}>{children}</div>;
+}
+
+const FREE_CLASS = {
+  tag: "FREE FOREVER",
+  tagColor: "#C9A96E",
+  title: "What Is MetFix?",
+  subtitle: "The framework that explains why fit people get sick and what coaches can do about it.",
+  description: "6 chapters, 15 lessons, ~3 hours. The foundational framework every MetFix coach starts with. Understand metabolic dysfunction, bioenergetics, and why the standard model of fitness is failing your clients.",
+  stats: [
+    { num: "6", label: "Chapters" },
+    { num: "15", label: "Lessons" },
+    { num: "~3hrs", label: "Runtime" },
+    { num: "Free", label: "Forever" },
+  ],
+  href: "https://whatismetfix.metfixclass.com/",
+  cta: "Take the Free Class",
+  featured: true,
+};
+
+const CORE_COURSES = [
+  {
+    num: "01",
+    tag: "CORE CURRICULUM",
+    title: "MetFix Essentials",
+    subtitle: "The complete online MetFix curriculum.",
+    description: "Metabolic dysfunction, nutrition frameworks, biomarker interpretation, client programming, and real-world application. This is the course that turns coaches into metabolic health professionals.",
+    stats: [
+      { num: "8", label: "Modules" },
+      { num: "40+", label: "Lessons" },
+      { num: "CME", label: "Credits" },
+      { num: "Lifetime", label: "Access" },
+    ],
+    href: "https://whatismetfix.metfixclass.com/",
+    cta: "Enroll in Essentials",
+  },
+];
+
+const SPECIALTY_TRACKS = [
+  {
+    num: "02",
+    tag: "SPECIALTY TRACK",
+    title: "Fit for Duty",
+    subtitle: "Metabolic health for first responders and tactical athletes.",
+    description: "Built for law enforcement, fire, military, and EMS. Understand the metabolic demands of shift work, stress, and physical readiness so you can keep your team performing at the highest level.",
+    href: "https://fitforduty.academy/",
+    cta: "Explore Fit for Duty",
+    audience: "First Responders & Tactical Athletes",
+  },
+  {
+    num: "03",
+    tag: "SPECIALTY TRACK",
+    title: "The Missing Manual",
+    subtitle: "Metabolic health for adolescents and youth coaches.",
+    description: "The framework for understanding and addressing metabolic dysfunction in young people. Covers puberty, fatty liver, insulin resistance, and how to talk to parents and kids about metabolic health.",
+    href: "https://cougarpuberty.club/enroll",
+    cta: "Explore The Missing Manual",
+    audience: "Youth Coaches & Parents",
+  },
+  {
+    num: "04",
+    tag: "SPECIALTY TRACK",
+    title: "Medical Nutrition Science",
+    subtitle: "Clinical-level nutrition education for healthcare providers.",
+    description: "Peer-reviewed, evidence-based nutrition science for physicians, dietitians, and advanced practice providers. Covers metabolic disease, therapeutic nutrition, and clinical application.",
+    href: "https://medicalnutritiontraining.org/",
+    cta: "Explore Medical Nutrition",
+    audience: "Healthcare Professionals",
+  },
+  {
+    num: "05",
+    tag: "SPECIALTY TRACK",
+    title: "The Prepared Patient",
+    subtitle: "Metabolic health education for patients and health-conscious individuals.",
+    description: "For people who want to take control of their own metabolic health. Understand your labs, your diet, and your body so you can stop waiting for the healthcare system to fix what you can fix yourself.",
+    href: "https://patient.academy/",
+    cta: "Explore The Prepared Patient",
+    audience: "Patients & Health Enthusiasts",
+  },
+];
+
+const IN_PERSON = {
+  tag: "IN-PERSON",
+  title: "Foundations Seminar",
+  subtitle: "The two-day weekend capstone. Hands-on, practical, transformative.",
+  description: "Coaches who complete Foundations leave with the tools, the framework, and the community to change their practice and their community's health. Held at MetFix affiliate gyms worldwide.",
+  href: "/affiliate-seminars",
+  cta: "View Seminar Calendar",
+  stats: [
+    { num: "2", label: "Days" },
+    { num: "Live", label: "Format" },
+    { num: "Cert.", label: "Included" },
+  ],
+};
+
+export default function Classes() {
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const fn = () => setScrolled(window.scrollY > 40);
+    window.addEventListener("scroll", fn, { passive: true });
+    return () => window.removeEventListener("scroll", fn);
+  }, []);
+  useEffect(() => { window.scrollTo(0, 0); }, []);
+
+  return (
+    <div style={{ background: "#0A0A0A", color: "#EFEFEF", minHeight: "100vh" }}>
+
+      {/* NAV */}
+      <nav style={{
+        position: "fixed", top: 0, left: 0, right: 0, zIndex: 100,
+        background: scrolled ? "rgba(10,10,10,0.97)" : "rgba(10,10,10,0.85)",
+        borderBottom: "1px solid rgba(255,255,255,0.07)",
+        backdropFilter: "blur(12px)", transition: "background 0.4s",
+      }}>
+        <div className="container" style={{ display: "flex", alignItems: "center", height: "4.5rem", gap: "2rem" }}>
+          <Link href="/" style={{ textDecoration: "none", display: "flex", flexDirection: "column", gap: "1px", flexShrink: 0 }}>
+            <span style={{ fontFamily: "'DM Sans'", fontWeight: 800, fontSize: "1.1rem", letterSpacing: "0.15em", color: "#EFEFEF", textTransform: "uppercase" }}>MetFix</span>
+            <span style={{ fontFamily: "'DM Mono'", fontSize: "0.55rem", letterSpacing: "0.18em", color: "#C9A96E", textTransform: "uppercase" }}>The Metabolic Fix</span>
+          </Link>
+          <div style={{ display: "flex", gap: "1.75rem", marginLeft: "auto", alignItems: "center" }}>
+            <Link href="/#classes" className="nav-link" style={{ fontSize: "0.72rem" }}>All Courses</Link>
+            <Link href="/affiliate-seminars" className="nav-link" style={{ fontSize: "0.72rem" }}>Foundations</Link>
+            <Link href="/become-an-affiliate" className="nav-link" style={{ fontSize: "0.72rem" }}>Affiliates</Link>
+          </div>
+          <a href="https://whatismetfix.metfixclass.com/" target="_blank" rel="noopener noreferrer"
+            className="btn-primary" style={{ marginLeft: "0.5rem", padding: "0.625rem 1.25rem", fontSize: "0.7rem" }}>
+            Start Free <ArrowRight size={13} />
+          </a>
+        </div>
+      </nav>
+
+      {/* PAGE HEADER */}
+      <section style={{ background: "#0A0A0A", paddingTop: "8rem", paddingBottom: "4rem", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+        <div className="container">
+          <Reveal>
+            <div className="rule"><span className="label-mono">MetFix Education</span></div>
+            <h1 className="display-serif" style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)", marginBottom: "1rem" }}>
+              All{" "}
+              <span className="display-serif-italic text-gold">Courses & Tracks.</span>
+            </h1>
+            <p style={{ fontSize: "1.05rem", lineHeight: 1.75, color: "rgba(239,239,239,0.55)", maxWidth: "560px", fontWeight: 300 }}>
+              Start free. Go deep. Every course is built on the same evidence base the healthcare system hasn't caught up with yet.
+            </p>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* FREE CLASS - FEATURED */}
+      <section style={{ background: "#0D0D0D", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+        <div className="container" style={{ paddingTop: "4rem", paddingBottom: "4rem" }}>
+          <Reveal>
+            <div style={{
+              background: "linear-gradient(135deg, #111111 0%, #0D0D0D 100%)",
+              border: "1px solid rgba(201,169,110,0.3)",
+              padding: "clamp(2rem, 4vw, 3.5rem)",
+              position: "relative",
+              overflow: "hidden",
+            }}>
+              {/* Gold corner accent */}
+              <div style={{ position: "absolute", top: 0, left: 0, width: "4px", height: "100%", background: "#C9A96E" }} />
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 380px), 1fr))", gap: "3rem", alignItems: "center" }}>
+                <div>
+                  <div style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", background: "rgba(201,169,110,0.12)", border: "1px solid rgba(201,169,110,0.3)", padding: "0.3rem 0.75rem", marginBottom: "1.5rem" }}>
+                    <Star size={10} style={{ color: "#C9A96E" }} />
+                    <span style={{ fontFamily: "'DM Mono'", fontSize: "0.6rem", letterSpacing: "0.15em", color: "#C9A96E", textTransform: "uppercase" }}>Free Forever. Start Here.</span>
+                  </div>
+                  <h2 className="display-serif" style={{ fontSize: "clamp(2rem, 4vw, 3rem)", marginBottom: "1rem" }}>
+                    {FREE_CLASS.title}
+                  </h2>
+                  <p style={{ fontSize: "1rem", lineHeight: 1.75, color: "rgba(239,239,239,0.65)", marginBottom: "1rem", fontWeight: 300 }}>
+                    {FREE_CLASS.subtitle}
+                  </p>
+                  <p style={{ fontSize: "0.875rem", lineHeight: 1.75, color: "rgba(239,239,239,0.4)", marginBottom: "2rem", fontWeight: 300 }}>
+                    {FREE_CLASS.description}
+                  </p>
+                  <a href={FREE_CLASS.href} target="_blank" rel="noopener noreferrer" className="btn-primary" style={{ padding: "0.875rem 2rem" }}>
+                    {FREE_CLASS.cta} <ArrowRight size={15} />
+                  </a>
+                </div>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "1px", background: "rgba(255,255,255,0.06)" }}>
+                  {FREE_CLASS.stats.map(s => (
+                    <div key={s.label} style={{ background: "#111111", padding: "1.5rem", textAlign: "center" }}>
+                      <div style={{ fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: "1.75rem", color: "#C9A96E", marginBottom: "0.25rem" }}>{s.num}</div>
+                      <div style={{ fontFamily: "'DM Mono'", fontSize: "0.55rem", letterSpacing: "0.12em", color: "rgba(239,239,239,0.35)", textTransform: "uppercase" }}>{s.label}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* CORE CURRICULUM */}
+      <section style={{ background: "#0A0A0A", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+        <div className="container" style={{ paddingTop: "4rem", paddingBottom: "4rem" }}>
+          <Reveal>
+            <div className="rule"><span className="label-mono">Core Curriculum</span></div>
+            <h2 className="display-serif" style={{ fontSize: "clamp(1.75rem, 3vw, 2.5rem)", marginBottom: "2.5rem" }}>
+              The full{" "}
+              <span className="display-serif-italic text-gold">professional curriculum.</span>
+            </h2>
+          </Reveal>
+          {CORE_COURSES.map((course, i) => (
+            <Reveal key={i} delay={i * 80}>
+              <div style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 380px), 1fr))",
+                gap: "3rem",
+                alignItems: "center",
+                padding: "2.5rem",
+                background: "#0D0D0D",
+                border: "1px solid rgba(255,255,255,0.06)",
+                marginBottom: "1px",
+              }}>
+                <div>
+                  <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1rem" }}>
+                    <span style={{ fontFamily: "'DM Mono'", fontSize: "0.6rem", letterSpacing: "0.1em", color: "#C9A96E" }}>{course.num}</span>
+                    <span style={{ fontFamily: "'DM Mono'", fontSize: "0.55rem", letterSpacing: "0.15em", color: "rgba(239,239,239,0.3)", textTransform: "uppercase" }}>{course.tag}</span>
+                  </div>
+                  <h3 className="display-serif" style={{ fontSize: "clamp(1.5rem, 2.5vw, 2rem)", marginBottom: "0.5rem" }}>{course.title}</h3>
+                  <p style={{ fontSize: "0.95rem", color: "rgba(239,239,239,0.6)", marginBottom: "0.75rem", fontWeight: 400 }}>{course.subtitle}</p>
+                  <p style={{ fontSize: "0.875rem", lineHeight: 1.75, color: "rgba(239,239,239,0.4)", marginBottom: "1.75rem", fontWeight: 300 }}>{course.description}</p>
+                  <a href={course.href} target="_blank" rel="noopener noreferrer" className="btn-primary">
+                    {course.cta} <ArrowRight size={13} />
+                  </a>
+                </div>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "1px", background: "rgba(255,255,255,0.06)" }}>
+                  {course.stats.map(s => (
+                    <div key={s.label} style={{ background: "#0A0A0A", padding: "1.25rem", textAlign: "center" }}>
+                      <div style={{ fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: "1.5rem", color: "#EFEFEF", marginBottom: "0.2rem" }}>{s.num}</div>
+                      <div style={{ fontFamily: "'DM Mono'", fontSize: "0.55rem", letterSpacing: "0.12em", color: "rgba(239,239,239,0.3)", textTransform: "uppercase" }}>{s.label}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      {/* SPECIALTY TRACKS */}
+      <section style={{ background: "#0D0D0D", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+        <div className="container" style={{ paddingTop: "4rem", paddingBottom: "4rem" }}>
+          <Reveal>
+            <div className="rule"><span className="label-mono">Specialty Tracks</span></div>
+            <h2 className="display-serif" style={{ fontSize: "clamp(1.75rem, 3vw, 2.5rem)", marginBottom: "0.75rem" }}>
+              Go deeper in your{" "}
+              <span className="display-serif-italic text-gold">area of practice.</span>
+            </h2>
+            <p style={{ fontSize: "0.95rem", lineHeight: 1.75, color: "rgba(239,239,239,0.45)", maxWidth: "520px", marginBottom: "2.5rem", fontWeight: 300 }}>
+              Each specialty track is built on the MetFix framework and designed for a specific coaching context.
+            </p>
+          </Reveal>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 300px), 1fr))", gap: "1px", background: "rgba(255,255,255,0.06)" }}>
+            {SPECIALTY_TRACKS.map((track, i) => (
+              <Reveal key={i} delay={i * 60}>
+                <div style={{
+                  background: "#0A0A0A",
+                  padding: "2rem",
+                  height: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  transition: "background 0.25s",
+                }}
+                  onMouseEnter={e => (e.currentTarget.style.background = "#111111")}
+                  onMouseLeave={e => (e.currentTarget.style.background = "#0A0A0A")}
+                >
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "1.25rem" }}>
+                    <span style={{ fontFamily: "'DM Mono'", fontSize: "0.6rem", letterSpacing: "0.1em", color: "#C9A96E" }}>{track.num}</span>
+                    <span style={{ fontFamily: "'DM Mono'", fontSize: "0.5rem", letterSpacing: "0.12em", color: "rgba(239,239,239,0.25)", textTransform: "uppercase", textAlign: "right", maxWidth: "120px", lineHeight: 1.5 }}>{track.audience}</span>
+                  </div>
+                  <div style={{ fontFamily: "'DM Mono'", fontSize: "0.55rem", letterSpacing: "0.15em", color: "rgba(239,239,239,0.3)", textTransform: "uppercase", marginBottom: "0.75rem" }}>{track.tag}</div>
+                  <h3 className="display-serif" style={{ fontSize: "1.4rem", marginBottom: "0.5rem" }}>{track.title}</h3>
+                  <p style={{ fontSize: "0.875rem", color: "rgba(239,239,239,0.55)", marginBottom: "0.75rem", fontWeight: 400, lineHeight: 1.5 }}>{track.subtitle}</p>
+                  <p style={{ fontSize: "0.8rem", lineHeight: 1.7, color: "rgba(239,239,239,0.35)", marginBottom: "1.75rem", fontWeight: 300, flexGrow: 1 }}>{track.description}</p>
+                  <a href={track.href} target="_blank" rel="noopener noreferrer"
+                    style={{
+                      display: "inline-flex", alignItems: "center", gap: "0.4rem",
+                      fontFamily: "'DM Mono'", fontSize: "0.6rem", letterSpacing: "0.1em",
+                      color: "#C9A96E", textDecoration: "none", textTransform: "uppercase",
+                      transition: "gap 0.2s",
+                    }}
+                    onMouseEnter={e => (e.currentTarget.style.gap = "0.7rem")}
+                    onMouseLeave={e => (e.currentTarget.style.gap = "0.4rem")}
+                  >
+                    {track.cta} <ArrowRight size={11} />
+                  </a>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* IN-PERSON FOUNDATIONS */}
+      <section style={{ background: "#0A0A0A", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+        <div className="container" style={{ paddingTop: "4rem", paddingBottom: "4rem" }}>
+          <Reveal>
+            <div style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 380px), 1fr))",
+              gap: "3rem",
+              alignItems: "center",
+              padding: "2.5rem",
+              background: "#0D0D0D",
+              border: "1px solid rgba(255,255,255,0.06)",
+            }}>
+              <div>
+                <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1rem" }}>
+                  <span style={{ fontFamily: "'DM Mono'", fontSize: "0.6rem", letterSpacing: "0.1em", color: "#C9A96E" }}>06</span>
+                  <span style={{ fontFamily: "'DM Mono'", fontSize: "0.55rem", letterSpacing: "0.15em", color: "rgba(239,239,239,0.3)", textTransform: "uppercase" }}>{IN_PERSON.tag}</span>
+                </div>
+                <h3 className="display-serif" style={{ fontSize: "clamp(1.5rem, 2.5vw, 2rem)", marginBottom: "0.5rem" }}>{IN_PERSON.title}</h3>
+                <p style={{ fontSize: "0.95rem", color: "rgba(239,239,239,0.6)", marginBottom: "0.75rem", fontWeight: 400 }}>{IN_PERSON.subtitle}</p>
+                <p style={{ fontSize: "0.875rem", lineHeight: 1.75, color: "rgba(239,239,239,0.4)", marginBottom: "1.75rem", fontWeight: 300 }}>{IN_PERSON.description}</p>
+                <Link href={IN_PERSON.href} className="btn-primary">
+                  {IN_PERSON.cta} <ArrowRight size={13} />
+                </Link>
+              </div>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1px", background: "rgba(255,255,255,0.06)" }}>
+                {IN_PERSON.stats.map(s => (
+                  <div key={s.label} style={{ background: "#0A0A0A", padding: "1.25rem", textAlign: "center" }}>
+                    <div style={{ fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: "1.5rem", color: "#EFEFEF", marginBottom: "0.2rem" }}>{s.num}</div>
+                    <div style={{ fontFamily: "'DM Mono'", fontSize: "0.55rem", letterSpacing: "0.12em", color: "rgba(239,239,239,0.3)", textTransform: "uppercase" }}>{s.label}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* MEMBERSHIP TIERS */}
+      <section style={{ background: "#080808", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+        <div className="container" style={{ paddingTop: "5rem", paddingBottom: "5rem" }}>
+          <Reveal>
+            <div className="rule"><span className="label-mono">Membership Plans</span></div>
+            <h2 className="display-serif" style={{ fontSize: "clamp(2rem, 4vw, 3rem)", marginBottom: "0.75rem" }}>
+              Choose your{" "}
+              <span className="display-serif-italic text-gold">level of commitment.</span>
+            </h2>
+            <p style={{ fontSize: "0.95rem", lineHeight: 1.75, color: "rgba(239,239,239,0.45)", maxWidth: "560px", marginBottom: "3rem", fontWeight: 300 }}>
+              Every MetFix journey starts free. Membership unlocks the full library, live community, and the path to affiliate status.
+            </p>
+          </Reveal>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 300px), 1fr))", gap: "1px", background: "rgba(255,255,255,0.06)" }}>
+            {[
+              {
+                name: "MetFix Starter", price: "$250", period: "/year",
+                tagline: "Begin your MetFix education",
+                features: ["2 Tier 1 class choices per year", "What Is MetFix? (free forever)", "Access to free public resources", "MetFix community newsletter", "Daily Fix access"],
+                notIncluded: ["Full specialty track library", "Live streams & journal clubs", "Research notes & deep dives", "Affiliate eligibility"],
+                cta: "Start with Starter", href: "https://rlhome.emilydesigns.org/membership", highlight: false,
+              },
+              {
+                name: "MetFix Professional", price: "$1,000", period: "/year",
+                tagline: "The full MetFix education platform",
+                features: ["Full specialty track library", "Live streams & journal clubs", "Research notes & evidence reviews", "Coaching tools & frameworks", "MetFix community access", "Daily Fix access", "Foundations Seminar discount", "Affiliate application eligibility"],
+                notIncluded: [],
+                cta: "Go Professional", href: "https://rlhome.emilydesigns.org/membership", highlight: true,
+              },
+              {
+                name: "MetFix Affiliate", price: "Licensing", period: "contact for pricing",
+                tagline: "Brand your gym with MetFix",
+                features: ["Everything in Professional", "MetFix brand license", "Affiliate dashboard & tools", "Brick & mortar support", "Global affiliate network access", "Exclusive affiliate programming", "Priority seminar registration", "Dedicated affiliate support"],
+                notIncluded: [],
+                cta: "Apply to Affiliate", href: "/become-an-affiliate", highlight: false,
+              },
+            ].map((tier, i) => (
+              <Reveal key={i} delay={i * 80}>
+                <div style={{
+                  background: tier.highlight ? "#111" : "#0A0A0A",
+                  padding: "2.5rem 2rem", height: "100%", display: "flex", flexDirection: "column",
+                  position: "relative",
+                  border: tier.highlight ? "1px solid rgba(201,169,110,0.25)" : "none",
+                  margin: tier.highlight ? "-1px" : "0",
+                }}>
+                  {tier.highlight && (
+                    <div style={{ position: "absolute", top: "-1px", left: "50%", transform: "translateX(-50%)", background: "#C9A96E", padding: "0.25rem 1rem" }}>
+                      <span style={{ fontFamily: "'DM Mono'", fontSize: "0.55rem", letterSpacing: "0.12em", color: "#0A0A0A", textTransform: "uppercase", fontWeight: 700 }}>Most Popular</span>
+                    </div>
+                  )}
+                  <div style={{ marginBottom: "2rem" }}>
+                    <div style={{ fontFamily: "'DM Mono'", fontSize: "0.6rem", letterSpacing: "0.15em", color: "#C9A96E", textTransform: "uppercase", marginBottom: "0.75rem" }}>{tier.name}</div>
+                    <div style={{ display: "flex", alignItems: "baseline", gap: "0.4rem", marginBottom: "0.5rem" }}>
+                      <span style={{ fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: "2.5rem", color: "#EFEFEF" }}>{tier.price}</span>
+                      <span style={{ fontFamily: "'DM Mono'", fontSize: "0.65rem", color: "rgba(239,239,239,0.35)", letterSpacing: "0.05em" }}>{tier.period}</span>
+                    </div>
+                    <p style={{ fontFamily: "'DM Sans'", fontSize: "0.85rem", color: "rgba(239,239,239,0.45)", fontWeight: 300 }}>{tier.tagline}</p>
+                  </div>
+                  <div style={{ flex: 1, marginBottom: "2rem" }}>
+                    {tier.features.map((f, j) => (
+                      <div key={j} style={{ display: "flex", alignItems: "flex-start", gap: "0.75rem", marginBottom: "0.75rem" }}>
+                        <span style={{ color: "#C9A96E", flexShrink: 0, marginTop: "0.1rem", fontSize: "0.8rem" }}>✓</span>
+                        <span style={{ fontFamily: "'DM Sans'", fontSize: "0.85rem", color: "rgba(239,239,239,0.7)", lineHeight: 1.5 }}>{f}</span>
+                      </div>
+                    ))}
+                    {tier.notIncluded.map((f, j) => (
+                      <div key={j} style={{ display: "flex", alignItems: "flex-start", gap: "0.75rem", marginBottom: "0.75rem", opacity: 0.35 }}>
+                        <span style={{ fontFamily: "'DM Mono'", fontSize: "0.7rem", color: "rgba(239,239,239,0.4)", flexShrink: 0, marginTop: "0.1rem" }}>&#x2715;</span>
+                        <span style={{ fontFamily: "'DM Sans'", fontSize: "0.85rem", color: "rgba(239,239,239,0.4)", lineHeight: 1.5, textDecoration: "line-through" }}>{f}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <a href={tier.href}
+                    target={tier.href.startsWith("http") ? "_blank" : "_self"}
+                    rel="noopener noreferrer"
+                    className={tier.highlight ? "btn-primary" : "btn-outline"}
+                    style={{ justifyContent: "center", textAlign: "center", display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                    {tier.cta} <ArrowRight size={13} />
+                  </a>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* BOTTOM CTA */}
+      <section style={{ background: "#080808" }}>
+        <div className="container" style={{ paddingTop: "5rem", paddingBottom: "5rem", textAlign: "center" }}>
+          <Reveal>
+            <div className="rule" style={{ justifyContent: "center" }}><span className="label-mono">Start Today</span></div>
+            <h2 className="display-serif" style={{ fontSize: "clamp(2rem, 4vw, 3rem)", marginBottom: "1rem" }}>
+              The free class is the{" "}
+              <span className="display-serif-italic text-gold">best place to start.</span>
+            </h2>
+            <p style={{ fontSize: "1rem", lineHeight: 1.75, color: "rgba(239,239,239,0.5)", maxWidth: "480px", margin: "0 auto 2.5rem", fontWeight: 300 }}>
+              No credit card. No trial period. 6 chapters, 15 lessons, and a framework that will change how you think about health.
+            </p>
+            <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
+              <a href="https://whatismetfix.metfixclass.com/" target="_blank" rel="noopener noreferrer" className="btn-primary" style={{ padding: "1rem 2.5rem" }}>
+                Take the Free Class <ArrowRight size={15} />
+              </a>
+              <Link href="/become-an-affiliate" className="btn-outline" style={{ padding: "1rem 2rem" }}>
+                Become an Affiliate
+              </Link>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* FOOTER */}
+      <footer style={{ background: "#080808", borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: "2.5rem", paddingBottom: "2rem" }}>
+        <div className="container">
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "1rem" }}>
+            <div>
+              <div style={{ fontFamily: "'DM Sans'", fontWeight: 800, fontSize: "1rem", letterSpacing: "0.15em", color: "#EFEFEF", textTransform: "uppercase" }}>MetFix</div>
+              <div style={{ fontFamily: "'DM Mono'", fontSize: "0.5rem", letterSpacing: "0.18em", color: "#C9A96E", textTransform: "uppercase" }}>The Metabolic Fix</div>
+            </div>
+            <div style={{ display: "flex", gap: "2rem", flexWrap: "wrap" }}>
+              <Link href="/" style={{ fontFamily: "'DM Sans'", fontSize: "0.8rem", color: "rgba(239,239,239,0.4)", textDecoration: "none" }}>← Home</Link>
+              <Link href="/affiliate-seminars" style={{ fontFamily: "'DM Sans'", fontSize: "0.8rem", color: "rgba(239,239,239,0.4)", textDecoration: "none" }}>Foundations Seminar</Link>
+              <Link href="/become-an-affiliate" style={{ fontFamily: "'DM Sans'", fontSize: "0.8rem", color: "rgba(239,239,239,0.4)", textDecoration: "none" }}>Become an Affiliate</Link>
+            </div>
+            <div style={{ fontFamily: "'DM Mono'", fontSize: "0.5rem", letterSpacing: "0.1em", color: "rgba(239,239,239,0.2)", textTransform: "uppercase" }}>© 2025 MetFix. All rights reserved.</div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
