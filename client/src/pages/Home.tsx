@@ -236,18 +236,6 @@ const AFFILIATE_PINS = [
   { name: "MetFix Lisbon", city: "Lisbon, Portugal", lat: 38.7223, lng: -9.1393 },
 ];
 
-// ─── Search Data ───────────────────────────────────────────────
-const SEARCH_ITEMS = [
-  { label: "What Is MetFix? Free Course", href: "https://whatis.metfix.org/", category: "Course" },
-  { label: "The Daily Fix: Free Daily Content", href: "https://dailyfix.emilydesigns.org/", category: "Free" },
-  { label: "All Courses", href: "/courses", category: "Specialty" },
-  { label: "Resource Library", href: "https://rlhome.emilydesigns.org/", category: "Resource" },
-  { label: "Foundations Seminar: In-Person", href: "/affiliate-seminars", category: "Event" },
-  { label: "Become a MetFix Affiliate", href: "/become-an-affiliate", category: "Community" },
-  { label: "Membership Plans", href: "https://rlhome.emilydesigns.org/membership", category: "Community" },
-  { label: "Broken Science Initiative", href: "https://brokenscience.org/", category: "Research" },
-];
-
 // ─── FAQ Data ─────────────────────────────────────────────────
 const FAQ_ITEMS = [
   {

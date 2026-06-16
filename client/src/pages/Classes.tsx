@@ -95,7 +95,6 @@ const COURSES = [
     audience: "Individuals · Patients · Health-Conscious",
     price: "Coming Soon",
     stats: [{ n: "6", l: "Modules" }, { n: "Self-paced", l: "Format" }],
-    href: "https://dashboard.emilydesigns.org",
     isAffiliateFree: true,
     intro: "For people who are tired of being managed. The metabolic science your doctor never had time to explain, and what you can actually do about it. Understand your labs, your diet, and your body so you can stop waiting for the healthcare system to fix what you can fix yourself. Built for health-conscious individuals, people managing a diagnosis, and anyone who has been told their labs are 'normal' while their body is telling a different story.",
     modules: [
@@ -115,7 +114,6 @@ const COURSES = [
     audience: "Teen Athletes · Coaches · Parents",
     price: "Coming Soon",
     stats: [{ n: "16", l: "Modules" }, { n: "10", l: "Sport Tracks" }, { n: "10", l: "Field Guides" }],
-    href: "https://dashboard.emilydesigns.org",
     isAffiliateFree: true,
     intro: "Athletic Teen Performance. Most adults were never given the right information about food, fat, and performance. The guidelines were shaped by industries that profited from confusion. ATP gives teen athletes 16 modules of what they never had access to. Teenage athletes are not small adults — their metabolic needs are different. This is the course that treats them that way.",
     modules: [
@@ -139,7 +137,6 @@ const COURSES = [
     audience: "MD · DO · MBBS · Medical Students",
     price: "Coming Soon",
     stats: [{ n: "40hrs", l: "CME Credit" }, { n: "7", l: "Modules" }, { n: "71", l: "HHS Competencies" }],
-    href: "https://dashboard.emilydesigns.org",
     isAffiliateFree: false,
     intro: "A 40-hour CME-eligible curriculum for medical students and physicians. Aligned with all 71 HHS nutrition competency requirements. 53 medical schools have committed. The HHS mandate deadline is Fall 2026. This curriculum satisfies the 40-hour nutrition education requirement established by the U.S. Department of Health and Human Services. Individual enrollment at $750. Institutional pricing from $400 per seat.",
     modules: [
@@ -160,7 +157,7 @@ const COURSES = [
     audience: "Coaches · Gym Owners · Health Professionals",
     price: "Coming Soon",
     stats: [{ n: "TBA", l: "Modules" }],
-    href: "https://dashboard.emilydesigns.org",
+    href: "https://brokenscience.org/our-courses/",
     isAffiliateFree: true,
     intro: "The complete professional curriculum. Every mechanism, every protocol, every conversation you need to coach metabolic health at the highest level. MetFix affiliates access this course at no cost and earn revenue share when their clients enroll. Join the waitlist to be notified when enrollment opens.",
     modules: [],
@@ -187,6 +184,8 @@ function CourseCard({ course, onExpand, isExpanded }: {
   const isComing = course.tag === "COMING SOON";
   const detailsOnly = isComing && ["atp", "medical-nutrition", "essentials-advanced", "prepared-patient"].includes(course.id);
   const showNotify = isComing && !detailsOnly;
+  const enrollHref = "href" in course && course.href ? course.href : "";
+  const showEnroll = enrollHref && (!isComing || course.id === "essentials-advanced");
   return (
     <div
       id={course.id}
@@ -243,8 +242,8 @@ function CourseCard({ course, onExpand, isExpanded }: {
                 {isExpanded ? "Less" : "Details"}
                 {isExpanded ? <ChevronUp size={12} /> : <ChevronDown size={12} />}
               </button>
-              {!isComing && (
-                <a href={course.href} target="_blank" rel="noopener noreferrer"
+              {showEnroll && (
+                <a href={enrollHref} target="_blank" rel="noopener noreferrer"
                   style={{
                     fontFamily: "'DM Mono'", fontSize: "0.65rem", letterSpacing: "0.1em", textTransform: "uppercase" as const,
                     color: "#0A0A0A", background: "#C9A96E", border: "1px solid #C9A96E",
@@ -255,12 +254,12 @@ function CourseCard({ course, onExpand, isExpanded }: {
                   onMouseEnter={e => (e.currentTarget.style.opacity = "0.85")}
                   onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
                 >
-                  {course.id === "free-class" ? "Start Here" : course.id === "essentials-advanced" ? "Join Waitlist" : "Enroll"}
+                  {course.id === "free-class" ? "Start Here" : course.id === "essentials-advanced" ? "View Course" : "Enroll"}
                   <ExternalLink size={11} />
                 </a>
               )}
-              {showNotify && (
-                <a href={course.href} target="_blank" rel="noopener noreferrer"
+              {showNotify && enrollHref && (
+                <a href={enrollHref} target="_blank" rel="noopener noreferrer"
                   style={{
                     fontFamily: "'DM Mono'", fontSize: "0.65rem", letterSpacing: "0.1em", textTransform: "uppercase" as const,
                     color: "rgba(239,239,239,0.5)", background: "none", border: "1px solid rgba(255,255,255,0.15)",
@@ -313,15 +312,15 @@ function CourseCard({ course, onExpand, isExpanded }: {
 
           {/* Bottom CTA */}
           <div style={{ marginTop: "1.75rem", display: "flex", gap: "1rem", alignItems: "center", flexWrap: "wrap" }}>
-            {!isComing && (
-              <a href={course.href} target="_blank" rel="noopener noreferrer"
+            {showEnroll && (
+              <a href={enrollHref} target="_blank" rel="noopener noreferrer"
                 className="btn-primary" style={{ padding: "0.875rem 2rem", fontSize: "0.78rem" }}>
-                {course.id === "free-class" ? "Take the Free Class" : `Enroll in ${course.label}`}
+                {course.id === "free-class" ? "Take the Free Class" : course.id === "essentials-advanced" ? "View on BSI Courses" : `Enroll in ${course.label}`}
                 <ArrowRight size={14} />
               </a>
             )}
-            {showNotify && (
-              <a href={course.href} target="_blank" rel="noopener noreferrer"
+            {showNotify && enrollHref && (
+              <a href={enrollHref} target="_blank" rel="noopener noreferrer"
                 className="btn-outline" style={{ padding: "0.875rem 2rem", fontSize: "0.78rem" }}>
                 Get Notified at Launch <ArrowRight size={14} />
               </a>

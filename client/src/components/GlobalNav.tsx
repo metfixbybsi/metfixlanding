@@ -13,10 +13,9 @@ const SEARCH_ITEMS = [
   { label: "What Is MetFix? Free Course", href: "https://whatis.metfix.org/", category: "Course" },
   { label: "The Daily Fix: Free Daily Content", href: "https://brokenscience.org/fix/", category: "Free" },
   { label: "All Courses", href: "/courses", category: "Specialty" },
-  { label: "Resource Library", href: "https://rlhome.emilydesigns.org/", category: "Resource" },
+  { label: "Resource Library", href: "https://brokenscience.org/category/articles/", category: "Resource" },
   { label: "Foundations Seminar: In-Person", href: "/affiliate-seminars", category: "Event" },
   { label: "Become a MetFix Affiliate", href: "/become-an-affiliate", category: "Community" },
-  { label: "Membership Plans", href: "https://rlhome.emilydesigns.org/membership", category: "Community" },
   { label: "Broken Science Initiative", href: "https://brokenscience.org/", category: "Research" },
 ];
 

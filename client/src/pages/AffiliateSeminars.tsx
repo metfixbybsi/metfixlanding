@@ -562,9 +562,9 @@ export default function AffiliateSeminars() {
                 <div style={{ display: "flex", flexDirection: "column", gap: "0.875rem", marginBottom: "2.5rem" }}>
                   {[
                     { step: "01", label: "What Is MetFix?", note: "Free, start here", href: "https://whatis.metfix.org/" },
-                    { step: "02", label: "MetFix Essentials", note: "Core online curriculum", href: "https://rlhome.emilydesigns.org/" },
+                    { step: "02", label: "MetFix Essentials", note: "Core online curriculum", href: "/classes" },
                     { step: "03", label: "Specialty Track", note: "Choose your focus area", href: "/classes" },
-                    { step: "04", label: "Daily Fix & Community", note: "Ongoing education", href: "https://dailyfix.emilydesigns.org/" },
+                    { step: "04", label: "Daily Fix & Community", note: "Ongoing education", href: "https://brokenscience.org/fix/" },
                     { step: "05", label: "Foundations Seminar", note: "You are here", href: "#calendar", active: true },
                     { step: "06", label: "Spark", note: "Implementation master guide", href: "/classes" },
                   ].map((item, i) => (
